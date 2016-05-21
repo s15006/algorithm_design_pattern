@@ -1,23 +1,18 @@
-def quick_sort(data):
-    import random
+#!/usr/bin/python3
 
+LIST_COUNT = 1000;
+LOOP_COUNT = 10000;
+MAX_NUM = 1000;
+
+def data_generate():
+    import random
+    return [random.randint(1, MAX_NUM) for _ in range(LIST_COUNT)]
+
+def quick_sort(data):
     if len(data) < 1:
         return data
 
-    """
-    基準値をランダムに選択
-    pivot = random.choice(data)
-    """
-
-    """
-    左の２つを比べて大きい方を選択
-    pivot = data[0] if data[0] > data[1] else data[1]
-    """
-
-    "最初の値を選択"
     pivot = data[0]
-
-
     left = []
     right = []
 
@@ -31,6 +26,15 @@ def quick_sort(data):
     right = quick_sort(right)
 
     return left + [pivot] + right
+
+def quick_sort2(data):
+    if len(data) <= 1:
+        return data
+
+    pivot = data[0]
+    data_rest = data[1:]
+
+    return quick_sort2([x for x in data_rest if x < pivot]) + [pivot] + quick_sort2([x for x in data_rest if x >= pivot])
 
 if __name__ == '__main__':
     import time
@@ -48,3 +52,18 @@ if __name__ == '__main__':
     print('経過時間:', (end - start))
     print('平均時間:', (end - start) / LOOP_COUNT)
 
+if __name__ == '__main__':
+    import time
+    import sys
+
+    start = time.time()
+    for _ in range(LOOP_COUNT):
+        data = data_generate()
+        quick_sort2(data)
+        print('.', end='')
+        sys.stdout.flush()
+
+    end = time.time()
+    print()
+    print('経過時間:', (end - start))
+    print('平均時間:', (end - start) / LOOP_COUNT)
