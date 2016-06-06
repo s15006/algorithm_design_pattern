@@ -31,10 +31,9 @@ def quick_sort2(data):
     if len(data) <= 1:
         return data
 
-    pivot = data[0]
-    data_rest = data[1:]
+    pivot = data.pop(0)
 
-    return quick_sort2([x for x in data_rest if x < pivot]) + [pivot] + quick_sort2([x for x in data_rest if x >= pivot])
+    return quick_sort2([x for x in data if x < pivot]) + [pivot] + quick_sort2([x for x in data if x >= pivot])
 
 if __name__ == '__main__':
     import time
